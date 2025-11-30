@@ -1,15 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <!--
-<html lang="es" {
-    box-sizing: border-box;
-    width: 250px;
-    border: 10px;
-    padding: 10px;
-}
-*, *:before, *:after {
-  box-sizing: inherit;
-}>
+******************ESTA ES LA VERSION BUENA SIN ELIMINAR LAS PARTES EN DESUSO, SOLO COMENTADAS. EN GIT ESTAN ELIMINADAS***
 -->
 
 <head>
@@ -24,12 +16,10 @@
 <style>
     #ml-gr,#kilos,#ml-l,#mg-km
     {
-  width: 4em;
-}
+      width: 4em;
+    }
 </style>
 </head>
-
-
 
 <body>
 <div class="container-fluid bg-primary">
@@ -50,16 +40,37 @@
             <input id="kilos" inputmode="decimal" type="number" maxlength="3" name="kilos" pattern="[0-9]{0,4}" required ><br><br>
             <label class="text-white"><strong>MILILITROS SUERO:</strong></label>
             <input id="ml-l" inputmode="decimal" type="number" maxlength="3" name="ml-l" pattern="[0-9]{0,4}" required ><br><br>
-            <label class="text-white"><strong>MICROGRAMOS POR KILO/MINUTO:</strong></label>
-            <input id="mg-km" inputmode="decimal" type="number" maxlength="4" name="mg-km" pattern="[0-9]{0,4}" required ><br><br>
-            <label class="text-white"><strong>MILILITROS HORA:</strong></label>
-            <input id="ml-hora" inputmode="decimal" type="number" maxlength="4" name="ml-hora" pattern="[0-9]{0,4}" required ><br><br>
+            <div id="mk">
+             <label id="microgramoskilominuto" class="text-white"><strong>MICROGRAMOS POR KILO/MINUTO:</strong></label>
+              <input id="mg-km" inputmode="decimal" type="number" maxlength="4" name="mg-km" pattern="[0-9]{0,4}" required ><br><br>
+            </div>
+              <div id="mh">
+              <label id="mililitroshora" class="text-white"><strong>MILILITROS HORA:</strong></label>
+              <input id="ml-hora" inputmode="decimal" type="number" maxlength="4" name="ml-hora" pattern="[0-9]{0,4}" required ><br><br>
+            </div>
         </form>
 
             <script>
-             
+              const campoTexto = document.getElementById('ml-hora');
+              const campoTexto2 = document.getElementById('mg-km');
+              function actualizarBoton(){
+                if (campoTexto.value.trim() ===''){
+                  btn1.disabled = false;
+                } else {
+                  btn1.disabled = true;
+                }
+                if (campoTexto2.value.trim() ===''){
+                  btn2.disabled = false;
+                } else {
+                  btn2.disabled = true;
+                }
+              }
+              campoTexto.addEventListener('input', actualizarBoton);
+              campoTexto2.addEventListener('input', actualizarBoton);
+              actualizarBoton();
+
                     function calc(){
-                    
+
                     var mlgr = document.getElementById("ml-gr").valueAsNumber;
                     var kilos = document.getElementById("kilos").valueAsNumber;
                     var mll = document.getElementById("ml-l").valueAsNumber;
@@ -72,23 +83,9 @@
                     var mgkm2 = mgkm.toString();
                     var mlh2 = mlh.toString();
 
-                    console.log (mlgr2.length+" "+kilos2.length+" "+mll2.length+" "+mgkm2.length+" "+mlh2);
-
-                    //document.getElementById("demo2").innerHTML = "Valor 1: "+mlgr+ ",  valor 2: "+kilos+" , valor 3: "+mll+" ,valor 4: "+mgkm;
-
                     var mgkgmin = (mgkm * kilos * 60) /1000; //miligramos kilo minuto
                     var solucion1 = (mll * mgkgmin) /mlgr; // mililitros hora
-
-                    //var microgramoskm = (solucion1 * mlgr2 * 1000)/(mll2 * kilos2 * 60);
-
-                      // Formula para hallar los microgramos kilo minuto:
-                      // (mililitros hora x dosis fármaco (mlgr2) x 1000)
-                      // -------------------------------------------------
-                      //  mililitros suero (mll2) x kilos paciente (kilos2) x 60
-
-                      // (solucion x mlgr2x1000)/(mll2xkilos2x60)
-
-                      var solredondeada = solucion1.toFixed(2);
+                    var solredondeada = solucion1.toFixed(2);
                    
                     if ((isNaN(mlgr2)) && (isNaN(kilos2)) && (isNaN(mll2)) && (isNaN(mgkm2)))
                       {
@@ -98,22 +95,22 @@
                       } else  if ((isNaN(mlgr2)) || (isNaN(kilos2)) || (isNaN(mll2)) || (isNaN(mgkm2)))
                       {
                         alert ("No puede haber campos en blanco, salvo el que se quiere hallar!!");
-                      
+                        location.reload();
                     } else if (!isNaN(mlh)) {
-                      alert ("Se han ignorado los datos del campo Mililitros hora, ya que es el dato que quieres calcular!!")
-                      //location.reload();
+                      alert ("No puedes escribir en ese campo, ya que es el dato que quieres calcular!!")
+                      location.reload();
                       //calc();
                     }
-                    {
-
-                        document.getElementById("demo").innerHTML = "La solución es "+solredondeada+ " mililitros hora";
-
-                        //document.getElementById("demo2").innerHTML = "Valor 1: "+mlgr+ ",  valor 2: "+kilos+" , valor 3: "+mll+" ,valor 4: "+mgkm;
+                                
+                      document.getElementById("demo").innerHTML = "La solución es <br>"+solredondeada+ "<br> mililitros hora<br>";
                         
-                        document.getElementById("demo3").innerHTML = '<button onclick=location.reload()>NUEVO CÁLCULO</button>';
+                       var b=document.getElementById('botones');
+                       b.style.display = 'none';
+                       var c=document.getElementById('mh');
+                       c.style.display = 'none';
 
-                    }
-            }
+                      document.getElementById("demo3").innerHTML = '<button onclick=location.reload()>NUEVO CÁLCULO</button>';
+                                }
 
             function calc2(){
 
@@ -128,10 +125,6 @@
               var mll2 = mll.toString();
               var mgkm2 = mgkm.toString();
               var mlh2 = mlh.toString();
-
-              console.log (mlgr2.length+" "+kilos2.length+" "+mll2.length+" "+mgkm2.length+" "+mlh2);
-
-                    //document.getElementById("demo2").innerHTML = "Valor 1: "+mlgr+ ",  valor 2: "+kilos+" , valor 3: "+mll+" ,valor 4: "+mgkm +" , valor 5: "+mlh;
 
                     var mgkgmin = (mgkm * kilos * 60) /1000; //miligramos kilo minuto
                     var solucion1 = (mll * mgkgmin) /mlgr; // mililitros hora
@@ -158,22 +151,32 @@
                        location.reload();
                     // } else  if ((isNaN(mlgr2)) || (isNaN(kilos2)) || (isNaN(mll2)) || (isNaN(mgkm2)))
                     // {
-                    } else  if ((isNaN(mlgr2)) || (isNaN(kilos2)) || (isNaN(mll2)))
+                    } else  if ((isNaN(mlgr2)) || (isNaN(kilos2)) || (isNaN(mll2)) || (isNaN(mlh2)))
                     {
                        alert ("No puede haber campos en blanco, salvo el que se quiere hallar!!");
+                       location.reload();;
                      
                    } else if (!isNaN(mgkm)) {
-                      alert ("Se han ignorado los datos del campo Microgramos kilo/minuto, ya que es el dato que quieres calcular!!")
-                      //location.reload();
+                      alert ("No puedes escribir en ese campo, ya que es el dato que quieres calcular!!")
+                      location.reload();
                       //calc();
                     }  
                    
                    {
-
-                       document.getElementById("demo").innerHTML = "La solución es "+solredondeada2+ " microgramos kilo minuto";
-
-                       //document.getElementById("demo2").innerHTML = "Valor 1: "+mlgr+ ",  valor 2: "+kilos+" , valor 3: "+mll+" ,valor 4: "+mgkm;
+   
+                       document.getElementById("demo").innerHTML = "La solución es <br>"+solredondeada2+ "<br> microgramos kilo minuto";
                        
+                       var b=document.getElementById('botones');
+                       b.style.display = 'none';
+         
+                       var b=document.getElementById('botones');
+                       b.style.display = 'none';
+          
+                       var c=document.getElementById('mk');
+                       c.style.display = 'none';
+
+                       document.getElementById("demo").innerHTML = "La solución es <br>"+solredondeada2+ "<br> microgramos kilo minuto<br>";
+  
                        document.getElementById("demo3").innerHTML = '<button onclick=location.reload()>NUEVO CÁLCULO</button>';
 
                    }
@@ -182,11 +185,17 @@
             </script>
 
             <br>
-            
-            <button onclick="calc()">CALCULAR MILILITROS HORA</button>
+            <div id="botones">
+            <button id="boton1" onclick="calc()">CALCULAR MILILITROS HORA</button>
             <br><br>
-            <button onclick="calc2()">CALCULAR MICROGRAMOS KILO MINUTO</button>
-            <br><br>
+            <button id="boton2"onclick="calc2()">CALCULAR MICROGRAMOS KILO MINUTO</button>
+            </div>
+      <script>
+            const btn1 = document.getElementById("boton1");
+            //btn1.disabled =true;
+            const btn2 = document.getElementById("boton2");
+            //btn2.disabled =true;    
+      </script>
 
             <h2 id="demo" class="text-center text-warning"></h2> 
             <p id="demo2"></p>
