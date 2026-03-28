@@ -476,6 +476,10 @@ input {
     .link ul {
         margin-top: 20px;
     }
+
+    .arriba {
+   display: none;
+}
  
 }
 .color1{
