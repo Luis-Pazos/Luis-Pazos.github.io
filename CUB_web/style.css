@@ -413,10 +413,13 @@ input {
     }
 
     .popular-container {
-        /*display: none;*/
         align-items: center;
         grid-template-columns: repeat(2,1fr);
         gap: 30px;
+    }
+
+    .popular-container img {
+        width: 100px;
     }
 
     .product {
