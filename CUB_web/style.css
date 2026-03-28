@@ -249,7 +249,7 @@ h2 {
 }
 
 .popular-content img {
-    margin: 0 10px; /* Lo he puesto yo para que no se queden las img pegadas a los bordes*/
+    margin: 0 10px 50px; /* Lo he puesto yo para que no se queden las img pegadas a los bordes*/
     width: 150px;
 }
 
